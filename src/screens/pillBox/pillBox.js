@@ -79,7 +79,9 @@ const PillBoxScreen = ({navigation}) => {
         style={[styles.rowFront, {height: rowHeightAnimatedValue}]}>
         <TouchableHighlight
           style={styles.rowFrontVisible}
-          onPress={() => {}}
+          onPress={() => {
+            navigation.navigate('Medication Order');
+          }}
           underlayColor={'#aaa'}>
           <View>
             <Text style={styles.title} numberOfLines={1}>

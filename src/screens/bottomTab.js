@@ -25,7 +25,7 @@ const BottomStack = () => {
             } else if (route.name === 'Pill Box') {
               return <AntDesign name="medicinebox" size={size} color={color} />;
             } else if (route.name === 'AP') {
-              return <FontAwesome name="phone" size={size} color={color} />;
+              return <FontAwesome name="calendar" size={size} color={color} />;
             } else if (route.name === 'ML') {
               return <FontAwesome name="list-alt" size={size} color={color} />;
             } else if (route.name === 'History') {
