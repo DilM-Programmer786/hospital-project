@@ -2,12 +2,11 @@ import React, {useState} from 'react';
 import {Text, StyleSheet, View, TextInput, Button} from 'react-native';
 
 const AddAppointment = () => {
-  const [currency, setCurrency] = useState('US Dollar');
   return (
     <View>
-      <Text style={{fontSize: 20, marginLeft: 30, marginTop: 20}}>
+      {/* <Text style={{fontSize: 20, marginLeft: 30, marginTop: 20}}>
         Appointment
-      </Text>
+      </Text> */}
       <View>
         <TextInput placeholder="Appointment Info" style={styles.input} />
         <TextInput

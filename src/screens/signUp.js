@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Platform, StyleSheet} from 'react-native';
 import FormInput from '../components/formInput';
 import FormButton from '../components/formButton';
+import {Picker} from '@react-native-picker/picker';
 import {Avatar} from 'react-native-paper';
 import {openDatabase} from 'react-native-sqlite-storage';
 // this is our database name
@@ -11,6 +12,7 @@ const SignupScreen = ({navigation}) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
+  const [userType, setUserType] = useState();
 
   const signupBtn = () => {
     if (email) {
@@ -76,6 +78,13 @@ const SignupScreen = ({navigation}) => {
         iconType="lock"
         secureTextEntry={true}
       />
+      <Picker
+        selectedValue={userType}
+        style={{height: 50, width: 150}}
+        onValueChange={(itemValue, itemIndex) => setUserType(itemValue)}>
+        <Picker.Item label="Patient" value="patient" />
+        <Picker.Item label="Staff" value="staff" />
+      </Picker>
 
       <FormButton buttonTitle="Sign Up" onPress={signupBtn} />
 

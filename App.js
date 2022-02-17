@@ -1,21 +1,12 @@
 import React, {useEffect} from 'react';
 
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {View} from 'react-native';
 import LoginScreen from './src/screens/login';
 import ProfileScreen from './src/screens/profileScreen';
 import SignupScreen from './src/screens/signUp';
 import {openDatabase} from 'react-native-sqlite-storage';
 import BottomStack from './src/screens/bottomTab';
-import AppointmentScreen from './src/screens/appointment';
-import AddAppointment from './src/screens/addAppointment';
+
 // this is our database name
 var db = openDatabase({name: 'UserDatabase.db'});
 
@@ -43,9 +34,9 @@ const App = () => {
       {/* <SignupScreen /> */}
       {/* <LoginScreen /> */}
       {/* <ProfileScreen /> */}
-      {/* <BottomStack /> */}
+      <BottomStack />
       {/* <AppointmentScreen /> */}
-      <AddAppointment />
+      {/* <AddAppointment /> */}
     </View>
   );
 };

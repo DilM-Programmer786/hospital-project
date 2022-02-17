@@ -8,6 +8,8 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
+
 import {Avatar} from 'react-native-paper';
 import FormInput from '../components/formInput';
 import FormButton from '../components/formButton';
@@ -18,6 +20,7 @@ var db = openDatabase({name: 'UserDatabase.db'});
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [userType, setUserType] = useState();
 
   let loginBtn = () => {
     alert('clicked');
@@ -75,6 +78,13 @@ const LoginScreen = ({navigation}) => {
         iconType="lock"
         secureTextEntry={true}
       />
+      <Picker
+        selectedValue={userType}
+        style={{height: 50, width: 150}}
+        onValueChange={(itemValue, itemIndex) => setUserType(itemValue)}>
+        <Picker.Item label="Patient" value="patient" />
+        <Picker.Item label="Staff" value="staff" />
+      </Picker>
 
       <FormButton buttonTitle="Sign In" onPress={loginBtn} />
 

@@ -13,29 +13,29 @@ import {
 import {SwipeListView} from 'react-native-swipe-list-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const appointments = [
-  {title: 'Appointment 1'},
-  {title: 'Appointment 2'},
-  {title: 'Appointment 3'},
-  {title: 'Appointment 4'},
-  {title: 'Appointment 5'},
-  {title: 'Appointment 6'},
-  {title: 'Appointment 7'},
-  {title: 'Appointment 8'},
-  {title: 'Appointment 9'},
-  {title: 'Appointment 10'},
-  {title: 'Appointment 11'},
-  {title: 'Appointment 12'},
-  {title: 'Appointment 13'},
-  {title: 'Appointment 14'},
+const medications = [
+  {title: 'Saved Medication 1'},
+  {title: 'Saved Medication 2'},
+  {title: 'Saved Medication 3'},
+  {title: 'Saved Medication 4'},
+  {title: 'Saved Medication 5'},
+  {title: 'Saved Medication 6'},
+  {title: 'Saved Medication 7'},
+  {title: 'Saved Medication 8'},
+  {title: 'Saved Medication 9'},
+  {title: 'Saved Medication 10'},
+  {title: 'Saved Medication 11'},
+  {title: 'Saved Medication 12'},
+  {title: 'Saved Medication 13'},
+  {title: 'Saved Medication 14'},
 ];
 
-const AppointmentScreen = ({navigation}) => {
+const MedicationListScreen = ({navigation}) => {
   // in our case list data come from api database
   const [listData, setListData] = useState(
-    appointments.map((AppointmentItem, index) => ({
+    medications.map((MedicationItem, index) => ({
       key: `${index}`,
-      title: AppointmentItem.title,
+      title: MedicationItem.title,
     })),
   );
 
@@ -79,7 +79,7 @@ const AppointmentScreen = ({navigation}) => {
         style={[styles.rowFront, {height: rowHeightAnimatedValue}]}>
         <TouchableHighlight
           style={styles.rowFrontVisible}
-          onPress={() => console.log('Appointment touch')}
+          onPress={() => {}}
           underlayColor={'#aaa'}>
           <View>
             <Text style={styles.title} numberOfLines={1}>
@@ -218,13 +218,18 @@ const AppointmentScreen = ({navigation}) => {
         rightActionValue={-500}
         style={{marginBottom: 10}}
       />
-      <Button title="Add Appointment" />
+      <Button
+        title="Add New"
+        onPress={() => {
+          navigation.navigate('Add Medication List');
+        }}
+      />
       <View style={{marginTop: 10}} />
     </View>
   );
 };
 
-export default AppointmentScreen;
+export default MedicationListScreen;
 
 const styles = StyleSheet.create({
   container: {

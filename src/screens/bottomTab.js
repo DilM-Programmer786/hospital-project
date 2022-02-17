@@ -6,10 +6,12 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import LoginScreen from './login';
+import SignupScreen from './signUp';
 import ProfileScreen from './profileScreen';
-import AppointmentScreen from './appointment';
-import AppointmentStack from './appointmentStack';
 
+import AppointmentStack from './appointment/appointmentStack';
+import PillBoxStack from './pillBox/pillBoxStack';
+import MedicationStack from './medicationList/medicationStack';
 const Tab = createBottomTabNavigator();
 const BottomStack = () => {
   return (
@@ -36,9 +38,9 @@ const BottomStack = () => {
           tabBarInactiveTintColor: 'gray',
         })}>
         <Tab.Screen name="Profile" component={ProfileScreen} />
-        <Tab.Screen name="Pill Box" component={LoginScreen} />
+        <Tab.Screen name="Pill Box" component={PillBoxStack} />
         <Tab.Screen name="AP" component={AppointmentStack} />
-        <Tab.Screen name="ML" component={LoginScreen} />
+        <Tab.Screen name="ML" component={MedicationStack} />
         <Tab.Screen name="History" component={LoginScreen} />
       </Tab.Navigator>
     </NavigationContainer>
