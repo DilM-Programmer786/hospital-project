@@ -1,0 +1,252 @@
+
+import { openDatabase } from 'react-native-sqlite-storage';
+// this is our database name
+var db = openDatabase({ name: 'UserDatabase.db' }); 
+
+// this will called in useEffect and will create user_table if not exist
+
+db.transaction(function(txn) {
+      txn.executeSql(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='table_user'",
+        [],
+        function(tx, res) {
+          console.log('item:', res.rows.length);
+          if (res.rows.length == 0) {
+            txn.executeSql('DROP TABLE IF EXISTS table_user', []);
+            txn.executeSql(
+              'CREATE TABLE IF NOT EXISTS table_user(user_id INTEGER PRIMARY KEY AUTOINCREMENT, user_name VARCHAR(20), user_contact INT(10), user_address VARCHAR(255))',
+              []
+            );
+          }
+        }
+      );
+    });
+  }
+
+//signup btn
+const signupBtn = () => {
+    if (email) {
+      if (password) {
+        if (confirmPassword) {
+          db.transaction(tx => {
+            // Loop would be here in case of many values
+
+            tx.executeSql(
+              'INSERT INTO User (Email, Password) VALUES (?,?)',
+              [email, password],
+              (tx, results) => {
+                console.log('Insert Results', results.rowsAffected);
+                if (results.rowsAffected > 0) {
+                  alert('sucess');
+                } else {
+                  alert('Updation Failed');
+                }
+              },
+            );
+          });
+        } else {
+          alert('Please fill Email');
+        }
+      } else {
+        alert('Please fill password');
+      }
+    } else {
+      alert('Please fill confirm password');
+    }
+  };
+// login btn
+let loginBtn = () => {
+    alert('clicked');
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT * FROM User where Email = ?',
+        [email],
+        (tx, results) => {
+          var len = results.rows.length;
+          if (len > 0) {
+            let res = results.rows.item(0);
+            tx.executeSql(
+              'SELECT * FROM User where Password = ?',
+              [password],
+              (tx, results) => {
+                var len1 = results.rows.length;
+                if (len1 > 0) {
+                  // navigate
+                  alert('login success');
+                } else {
+                  alert('password wrong');
+                }
+              },
+            );
+          } else {
+            alert('No user found with this email');
+          }
+        },
+      );
+    });
+  };
+
+
+// insert query
+InsertDBAction=()=>{
+
+    
+    if (user_name) {
+     if (user_contact) {
+       if (user_address) {
+
+         db.transaction((tx)=> {
+
+           // Loop would be here in case of many values
+
+           tx.executeSql(
+             'INSERT INTO table_user (user_id, user_name, user_contact, user_address) VALUES (?,?,?,?)',
+             [user_id,user_name, user_contact,user_address],
+             (tx, results) => {
+               console.log('Insert Results',results.rowsAffected);
+               if(results.rowsAffected>0){
+                 Alert.alert( 'Success', 'User updated successfully',
+                   [
+                     {text: 'Ok', onPress: () => props.navigation.navigate('HomeScreen')},
+                   ],
+                   { cancelable: false }
+                 );
+               }else{
+                 alert('Updation Failed');
+               }
+             }
+           );
+
+
+
+         });
+
+} else {
+         alert('Please fill Address');
+       }
+     } else {
+       alert('Please fill Contact Number');
+     }
+   } else {
+     alert('Please fill Name');
+   }
+}
+
+// get all records query
+
+SelectDBAction=()=>{
+  console.log('Select DB is Called');
+
+  db.transaction(tx => {
+       tx.executeSql(
+         'SELECT * FROM table_user',[],
+         (tx, results) => {
+           var len = results.rows.length;
+           console.log('select * results are = ',len);
+           if (len > 0) {
+
+             var temp = [];
+             for (let i = 0; i < results.rows.length; ++i) {
+               temp.push(results.rows.item(i));
+               console.log(results.rows.item(i).user_name);
+             }
+
+             this.setState({
+              user_name:results.rows.item(0).user_name,
+             });
+             this.setState({
+              user_contact:results.rows.item(0).user_contact,
+             });
+             this.setState({
+              user_address:results.rows.item(0).user_address,
+             });
+
+           }else{
+             alert('No user found');
+            //  this.setState({
+            //    user_name:'',
+            //    user_contact:'',
+            //    user_address:'',
+            //  });
+           }
+         }
+       );
+     });
+
+}
+
+// update record query
+
+UpdateDBAction=()=>{
+  console.log('Select DB is Called');
+
+  this.setState({
+    user_name:'NTU',
+    user_contact:'1122',
+    user_address:'Updated Address',
+    input_user_id:1,
+  })
+
+  if (this.state.user_name){
+     if (this.state.user_contact){
+       if (this.state.user_address){
+         db.transaction((tx)=> {
+           tx.executeSql(
+             'UPDATE table_user set user_name=?, user_contact=? , user_address=? where user_id=?',
+             [this.state.user_name, this.state.user_contact, this.state.user_address, this.state.input_user_id],
+             (tx, results) => {
+               console.log('Results',results.rowsAffected);
+               if(results.rowsAffected>0){
+                 Alert.alert( 'Success', 'User updated successfully',
+                   [
+                     {text: 'Ok', onPress: () => that.props.navigation.navigate('HomeScreen')},
+                   ],
+                   { cancelable: false }
+                 );
+               }else{
+                 alert('Updation Failed');
+               }
+             }
+           );
+         });
+       }else{
+         alert('Please fill Address');
+       }
+     }else{
+       alert('Please fill Contact Number');
+     }
+   }else{
+     alert('Please fill Name');
+   }
+}
+
+
+// delete query
+
+DeleteRowDBAction=()=>{
+
+db.transaction(tx => {
+    tx.executeSql(
+      'DELETE FROM  table_user where user_id=3',
+      [],
+      (tx, results) => {
+        console.log('Results', results.rowsAffected);
+        if (results.rowsAffected > 0) {
+          Alert.alert(
+            'Success',
+            'User deleted successfully',
+            [
+              {
+                text: 'Ok',
+                onPress: () => that.props.navigation.navigate('HomeScreen'),
+              },
+            ],
+            { cancelable: false }
+          );
+        } else {
+          alert('Please insert a valid User Id');
+        }
+      }
+    );
+  });
+}
